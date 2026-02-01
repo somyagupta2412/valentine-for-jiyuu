@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Shadows+Into+Light&family=Quicksand:wght@500&display=swap" rel="stylesheet">
+
+<style>
+/* ===== BASE ===== */
+body{
+    margin:0;
+    height:100vh;
+    font-family:'Quicksand',sans-serif;
+    background:linear-gradient(270deg,#ff758c,#ff7eb3,#ffc3a0);
+    background-size:600% 600%;
+    animation:bg 10s ease infinite;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+@keyframes bg{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+/* ===== CARD ===== */
+.container{
+    background:rgba(255,255,255,0.95);
+    width:90%;
+    max-width:430px;
+    max-height:85vh;
+    padding:35px 30px;
+    border-radius:35px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.25);
+    text-align:center;
+    overflow-y:auto;
+}
+
+/* ===== TEXT ===== */
+h1,h2{
+    font-family:'Pacifico',cursive;
+    color:#e63946;
+}
+h1{font-size:2.6em}
+.tempt{color:#ff4d6d;margin-bottom:10px}
+.counter{font-size:14px;color:#777}
+
+/* ===== BUTTONS ===== */
+.buttons{position:relative;height:150px;margin-top: 20px;}
+button{
+    border:none;
+    border-radius:40px;
+    padding:14px 32px;
+    font-size:16px;
+    cursor:pointer;
+}
+#yesBtn{
+    background:linear-gradient(135deg,#ff4d6d,#ff758f);
+    color:white;
+    position:absolute;
+    left:50%;
+    transform:translateX(-130%);
+    animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(255,77,109,.6)}
+    70%{box-shadow:0 0 0 15px rgba(255,77,109,0)}
+}
+#noBtn{
+    background:#adb5bd;
+    color:white;
+    position:absolute;
+    left:50%;
+    transform:translateX(30%);
+}
+
+/* ===== NO MESSAGE ===== */
+#message{min-height:50px}
+.bubble{
+    display:inline-block;
+    background:#ffe5ec;
+    color:#ff4d6d;
+    padding:10px 18px;
+    border-radius:20px;
+    font-family:'Shadows Into Light',cursive;
+    font-size:20px;
+}
+
+/* ===== POLAROID ===== */
+.polaroid{
+    background:white;
+    padding:15px 15px 35px;
+    width:220px;
+    margin:20px auto;
+    border-radius:8px;
+    box-shadow:0 0 25px rgba(255,77,109,.6);
+    transform:rotate(-3deg);
+}
+.polaroid img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    border-radius:4px;
+}
+/* Polaroid slow reveal */
+.polaroid {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 1.5s ease, transform 1.5s ease;
+}
+
+.polaroid.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.nickname{
+    font-family:'Shadows Into Light',cursive;
+    font-size:20px;
+    margin-top:8px;
+}
+
+/* ===== TEXT BLOCKS ===== */
+.memory{font-style:italic;color:#555;margin:15px 0}
+.love-paragraph{
+    font-size:15px;
+    line-height:1.7;
+    color:#444;
+    margin:15px 0;
+}
+
+/* ===== BACK ===== */
+.back-btn{
+    margin-top:15px;
+    padding:12px 28px;
+    border-radius:30px;
+    background:linear-gradient(135deg,#ffb3c1,#ff758f);
+    color:white;
+}
+
+/* ===== EFFECTS ===== */
+canvas{
+    position:fixed;
+    top:0;left:0;
+    pointer-events:none;
+}
+.read-heart{
+    position:fixed;
+    bottom:-10px;
+    font-size:18px;
+    opacity:.8;
+    animation:readFloat 7s linear forwards;
+    pointer-events:none;
+}
+@keyframes readFloat{
+    from{transform:translateY(0) scale(.8);opacity:0}
+    20%{opacity:1}
+    to{transform:translateY(-120vh) scale(1.2);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<!-- FRONT -->
+<div class="container" id="main">
+    <h1>Jiyuu, will you be my Valentine? 💕</h1>
+    <p class="tempt">If you think NO is an option… try it 😉</p>
+    <div class="counter">You tried NO: <span id="count">0</span> times</div>
+
+    <div class="buttons">
+        <button id="yesBtn">YES 💖</button>
+        <button id="noBtn">NO 🙄</button>
+    </div>
+
+    <div id="message"></div>
+</div>
+
+<!-- CELEBRATE -->
+<div class="container" id="celebrate" style="display:none;">
+    <h2>Happy Valentine’s Day 💖</h2>
+
+    <div class="polaroid">
+        <img src="us.jpeg" alt="Us together">
+        <div class="nickname">my pumpkinn🎃❤️</div>
+    </div>
+
+    <div class="memory">
+        “I hope you remember our first kiss aapke ghar pai jisme aapki wajah se cold hogaya tha😅😁”
+    </div>
+
+    <div class="love-paragraph">
+        Jiyuu, you mean more to me than words could ever express🤗.
+        You make my world brighter, my heart warmer, and my days happier
+        just by being you🥰. I love the way you smile, the way you care,
+        and how you make me feel like the luckiest person alive.
+        I miss you more than you know, and I can’t wait to make countless
+        memories with you. I love you so, so much today, tomorrow,
+        and always ❤️💕
+    </div>
+
+    <p><em>This page exists because you exist.</em></p>
+
+    <button class="back-btn" id="backBtn">⬅ Back</button>
+</div>
+
+<script>
+/* NO button */
+let tries=0;
+const texts=["Nope 😌","Nice try 😏","Neverrr 😜","Haha no 💅","No escape 😈", "You checking my patience😤"];
+noBtn.onmouseover=()=>{
+    tries++;
+    count.innerText=tries;
+    noBtn.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*120-60}px)`;
+    message.innerHTML=`<div class="bubble">${texts[tries%texts.length]}</div>`;
+};
+
+/* Fireworks */
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;canvas.height=innerHeight;
+let parts=[];
+function boom(x,y){
+    for(let i=0;i<100;i++){
+        parts.push({x,y,vx:(Math.random()-.5)*6,vy:(Math.random()-.5)*6,l:60});
+    }
+}
+function anim(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    parts.forEach((p,i)=>{
+        p.x+=p.vx;p.y+=p.vy;p.l--;
+        ctx.fillStyle=`rgba(255,77,109,${p.l/60})`;
+        ctx.fillRect(p.x,p.y,3,3);
+        if(p.l<=0) parts.splice(i,1);
+    });
+    requestAnimationFrame(anim);
+}
+
+/* Hearts while reading */
+let readInterval;
+function startReadHearts(){
+    readInterval=setInterval(()=>{
+        const h=document.createElement("div");
+        h.className="read-heart";
+        h.innerHTML=Math.random()>0.5?"💖":"💗";
+        h.style.left=Math.random()*100+"vw";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),7000);
+    },700);
+}
+
+/* YES */
+yesBtn.onclick=()=>{
+    main.style.display="none";
+    boom(innerWidth/2,innerHeight/2);
+    anim();
+    setTimeout(()=>{
+        celebrate.style.display="block";
+        startReadHearts();
+    },1800);
+    // reveal polaroid slowly
+setTimeout(() => {
+    document.querySelector(".polaroid").classList.add("show");
+}, 600);
+};
+
+/* BACK */
+backBtn.onclick = ()=>{
+    clearInterval(readInterval);
+    document.querySelector(".polaroid").classList.remove("show");
+    location.reload();
+};
+
+</script>
+
+</body>
+</html>
